@@ -25,10 +25,8 @@ export function ProfileMenu() {
     try {
       const response = await fetch(`${config.apiBaseUrl}/auth/session/`, {
         credentials: "include",
+        cache: "no-store",
         signal,
-        headers: {
-          "Cache-Control": "no-store",
-        },
       });
       if (response.ok) {
         const payload = (await response.json()) as SessionPayload;
