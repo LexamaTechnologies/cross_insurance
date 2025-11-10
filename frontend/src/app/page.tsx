@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { MobileHeaderMenu } from "@/components/MobileHeaderMenu";
 import { QuoteForm } from "@/components/QuoteForm";
 import { ProfileMenu } from "@/components/ProfileMenu";
 import { config } from "@/lib/config";
@@ -84,6 +85,9 @@ const mediaHighlights = [
 ];
 
 export default function HomePage() {
+  const phoneHref = `tel:${config.phoneNumber.replace(/[^\d+]/g, "")}`;
+  const whatsappHref = `https://wa.me/${config.whatsappNumber.replace(/[^\d]/g, "")}`;
+
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
       <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-md">
@@ -99,20 +103,23 @@ export default function HomePage() {
             ))}
           </nav>
           <div className="hidden items-center gap-3 text-sm font-medium md:flex">
-            <Link
-              href={`tel:${config.phoneNumber.replace(/[^\d+]/g, "")}`}
-              className="text-slate-700 hover:text-slate-900"
-            >
+            <Link href={phoneHref} className="text-slate-700 hover:text-slate-900">
               Llamar
             </Link>
             <Link
-              href={`https://wa.me/${config.whatsappNumber.replace(/[^\d]/g, "")}`}
+              href={whatsappHref}
               className="rounded-full bg-emerald-500 px-4 py-2 text-white transition hover:bg-emerald-600"
             >
               WhatsApp
             </Link>
             <ProfileMenu />
           </div>
+          <MobileHeaderMenu
+            navigation={navigation}
+            phoneDisplay={config.phoneNumber}
+            phoneHref={phoneHref}
+            whatsappHref={whatsappHref}
+          />
         </div>
       </header>
 

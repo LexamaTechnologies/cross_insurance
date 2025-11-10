@@ -3,44 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { useSessionStatus } from "@/hooks/useSessionStatus";
 import { config } from "@/lib/config";
 
-type SessionPayload = {
-  authenticated: boolean;
-  username: string | null;
-  is_staff: boolean;
-};
-
 export function ProfileMenu() {
-  const [session, setSession] = useState<SessionPayload>({
-    authenticated: false,
-    username: null,
-    is_staff: false,
-  });
+  const { session, setSession, fetchSession } = useSessionStatus();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement | null>(null);
 
-  const fetchSession = async (signal?: AbortSignal) => {
-    try {
-      const response = await fetch(`${config.apiBaseUrl}/auth/session/`, {
-        credentials: "include",
-        cache: "no-store",
-        signal,
-      });
-      if (response.ok) {
-        const payload = (await response.json()) as SessionPayload;
-        setSession(payload);
-      }
-    } catch (error) {
-      console.error("Session fetch failed", error);
-    }
-  };
-
   useEffect(() => {
-    const controller = new AbortController();
-    fetchSession(controller.signal);
-
     const onClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -49,7 +21,6 @@ export function ProfileMenu() {
 
     document.addEventListener("click", onClickOutside);
     return () => {
-      controller.abort();
       document.removeEventListener("click", onClickOutside);
     };
   }, []);
