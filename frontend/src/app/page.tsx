@@ -53,11 +53,6 @@ const teamMembers = [
     role: "Gerente de Operaciones",
     bio: "Coordina el equipo de agentes y las renovaciones para garantizar renovaciones sin fricción.",
   },
-  {
-    name: "Carlos Lezama",
-    role: "CTO",
-    bio: "Acompaña a nuestros asegurados durante todo el proceso de reclamaciones.",
-  },
 ];
 
 const testimonials = [
