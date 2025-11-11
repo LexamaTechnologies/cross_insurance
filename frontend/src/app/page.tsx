@@ -214,7 +214,7 @@ export default function HomePage() {
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
                 <h3 className="text-xl font-semibold text-slate-900">Visión</h3>
                 <p className="mt-4 text-slate-600">
-                  Ser la correduría que las familias y negocios de Puerto Rico eligen
+                  Ser la corretage que las familias y negocios de Puerto Rico eligen
                   por nuestra capacidad de anticipar riesgos, personalizar coberturas
                   y acompañar con tecnología y empatía.
                 </p>

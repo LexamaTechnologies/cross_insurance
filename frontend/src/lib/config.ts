@@ -3,6 +3,6 @@ export const config = {
   quoteEndpoint:
     process.env.NEXT_PUBLIC_QUOTE_ENDPOINT ?? "http://127.0.0.1:8000/api/leads/",
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "+1 (787) 354-3772",
-  phoneNumber: process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "7873543772",
+  phoneNumber: process.env.NEXT_PUBLIC_PHONE_NUMBER ?? "+1 (787) 354-3772",
   supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? "contacto@crossinsurance.com",
 };
