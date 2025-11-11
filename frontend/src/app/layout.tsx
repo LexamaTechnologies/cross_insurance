@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "Cross Insurance",
   description:
     "Correduría moderna que ofrece seguros de autos, vida, propiedad y comerciales con una plataforma CRM integral.",
+  icons: {
+    icon: '/logos/cross insurance logo gold textured.png',
+  },
   openGraph: {
     title: "Cross Insurance",
     description:

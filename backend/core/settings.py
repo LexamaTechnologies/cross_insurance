@@ -13,7 +13,7 @@ env.read_env(BASE_DIR / ".env")
 SECRET_KEY = env("DJANGO_SECRET_KEY", default="unsafe-secret-key")
 DEBUG = env.bool("DJANGO_DEBUG", default=True)
 ALLOWED_HOSTS: list[str] = env.list(
-    "DJANGO_ALLOWED_HOSTS", default=["127.0.0.1", "localhost"]
+    "DJANGO_ALLOWED_HOSTS", default=["127.0.0.1", "localhost", "api.crossinsurancepr.com"]
 )
 
 INSTALLED_APPS = [
@@ -100,7 +100,12 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS: list[str] = env.list(
-    "CORS_ALLOWED_ORIGINS", default=["http://localhost:3000", "http://127.0.0.1:3000"]
+    "CORS_ALLOWED_ORIGINS", default=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://crossinsurancepr.com",
+        "https://www.crossinsurancepr.com",
+    ]
 )
 CORS_ALLOW_CREDENTIALS = True
 

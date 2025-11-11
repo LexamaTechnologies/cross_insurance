@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { MobileHeaderMenu } from "@/components/MobileHeaderMenu";
@@ -47,11 +48,13 @@ const teamMembers = [
     name: "Johanna González",
     role: "Directora Ejecutiva",
     bio: "20 años diseñando soluciones de seguros a medida para clientes corporativos y personales.",
+    photo: "/images/johanna_profile.jpg",
   },
   {
     name: "Ricardo Cruz",
     role: "Gerente de Operaciones",
     bio: "Coordina el equipo de agentes y las renovaciones para garantizar renovaciones sin fricción.",
+    photo: "/images/ricardo_profile.jpg",
   },
 ];
 
@@ -87,7 +90,8 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
       <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="#inicio" className="text-lg font-semibold text-slate-900">
+          <Link href="#inicio" className="flex items-center gap-2 text-lg font-semibold text-slate-900">
+            <Image src="/logos/cross insurance logo black.png" alt="Cross Insurance Logo" width={48} height={48} />
             Cross Insurance
           </Link>
           <nav className="hidden gap-6 text-sm font-medium text-slate-700 md:flex">
@@ -123,7 +127,7 @@ export default function HomePage() {
           <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-12 px-6 py-20 lg:flex-row">
             <div className="max-w-xl space-y-6">
               <p className="text-sm uppercase tracking-[0.3em] text-slate-300">
-                Correduría de Seguros
+                Corretage de Seguros
               </p>
               <h1 className="text-4xl font-bold sm:text-5xl">
                 Protegemos tu patrimonio con asesoría cercana y soluciones ágiles.
@@ -147,23 +151,12 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-            <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/10 p-6 text-sm text-slate-100 shadow-lg backdrop-blur-md">
-              <h2 className="text-lg font-semibold">Dashboard inteligente</h2>
-              <ul className="mt-4 space-y-3 text-slate-200">
-                <li>• Renovaciones con alertas automáticas y seguimiento.</li>
-                <li>• Envío seguro de documentos y cartas personalizadas.</li>
-                <li>• Facturación manual y reportes en tiempo real.</li>
-                <li>• Integraciones con WhatsApp, email y llamadas.</li>
-              </ul>
-            </div>
+            <Image src="/images/landing_image.jpeg" alt="Landing Image" width={400} height={400} className="h-100 w-100 rounded-full object-cover shadow-lg" />
           </div>
         </section>
 
-        <section
-          id="quienes"
-          className="mx-auto flex max-w-6xl flex-col gap-12 px-6 py-20 lg:flex-row"
-        >
-          <div className="lg:w-1/2">
+        <section id="quienes" className="mx-auto max-w-6xl px-6 py-20 space-y-12">
+          <div>
             <h2 className="text-3xl font-semibold text-slate-900">Quiénes somos</h2>
             <p className="mt-6 text-slate-600">
               Somos un equipo multidisciplinario con más de 25 años de experiencia
@@ -178,21 +171,36 @@ export default function HomePage() {
               del producto hasta la gestión de reclamaciones.
             </p>
           </div>
-          <div className="lg:w-1/2">
+          <div>
             <h3 className="text-2xl font-semibold text-slate-900">Nuestro equipo</h3>
-            <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <div className="mt-6 grid gap-8 md:grid-cols-2">
               {teamMembers.map((member) => (
                 <div
                   key={member.name}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                  className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
                 >
-                  <p className="text-base font-semibold text-slate-900">
-                    {member.name}
-                  </p>
-                  <p className="text-sm font-medium text-emerald-600">
-                    {member.role}
-                  </p>
-                  <p className="mt-3 text-sm text-slate-600">{member.bio}</p>
+                  <div className="flex items-center gap-5">
+                    {member.photo ? (
+                      <Image
+                        src={member.photo}
+                        alt={member.name}
+                        width={96}
+                        height={96}
+                        className="h-24 w-24 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-24 w-24 rounded-full bg-slate-100" />
+                    )}
+                    <div>
+                      <p className="text-xl font-semibold text-slate-900">
+                        {member.name}
+                      </p>
+                      <p className="text-sm font-medium text-emerald-600">
+                        {member.role}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-sm text-slate-600">{member.bio}</p>
                 </div>
               ))}
             </div>
@@ -223,8 +231,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="experiencia" className="mx-auto max-w-6xl px-6 py-20">
-          <div className="grid gap-12 lg:grid-cols-2">
+        <section id="experiencia" className="mx-auto max-w-6xl px-6 py-16">
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
               <h2 className="text-3xl font-semibold text-slate-900">
                 Experiencia comprobada
