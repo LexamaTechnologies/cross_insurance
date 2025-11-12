@@ -441,6 +441,17 @@ export default function HomePage() {
           <div className="text-xs text-slate-400">
             © {new Date().getFullYear()} Cross Insurance. Todos los derechos
             reservados.
+            <p className="mt-1">
+              Desarrollado por{" "}
+              <a
+                href="https://lexamatechnologies.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-600 hover:text-emerald-700 font-medium"
+              >
+                Lexama Technologies
+              </a>
+            </p>
           </div>
         </div>
       </footer>
