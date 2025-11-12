@@ -184,8 +184,8 @@ export default function HomePage() {
                       <Image
                         src={member.photo}
                         alt={member.name}
-                        width={96}
-                        height={96}
+                        width={400}
+                        height={400}
                         className="h-24 w-24 rounded-full object-cover"
                       />
                     ) : (
