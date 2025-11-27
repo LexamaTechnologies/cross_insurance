@@ -210,7 +210,7 @@ export default function HomePage() {
         <section id="vision" className="bg-white py-20">
           <div className="mx-auto max-w-6xl px-6">
             <h2 className="text-3xl font-semibold text-slate-900">Visión &amp; Misión</h2>
-            <p className="mt-4 max-w-3xl text-slate-600">
+            <p className="mt-4 text-slate-600">
               En Cross Insurance acompañamos a personas y negocios de Puerto Rico con tecnología y 17 años de
               experiencia, ofreciendo guía cercana y protección clara para los momentos inesperados.
             </p>
