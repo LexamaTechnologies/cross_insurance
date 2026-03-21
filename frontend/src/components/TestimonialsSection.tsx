@@ -30,7 +30,7 @@ export function TestimonialsSection() {
               className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
             >
               <blockquote className="text-base text-slate-700">
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-4 text-sm font-semibold text-slate-900">
                 {testimonial.name}
