@@ -164,6 +164,14 @@ export function DashboardClient() {
             >
               Ir al sitio
             </button>
+            <a
+              href={`${config.apiBaseUrl.replace("/api", "")}/admin/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-300"
+            >
+              Admin
+            </a>
             <button
               onClick={handleLogout}
               disabled={isLoggingOut}
