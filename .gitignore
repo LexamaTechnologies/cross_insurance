@@ -34,5 +34,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Django build artifacts
+backend/staticfiles/
+
+# Claude Code
+.claude/
+
 # Vercel
 .vercel

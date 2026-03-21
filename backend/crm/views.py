@@ -8,7 +8,16 @@ from rest_framework import status, viewsets
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.response import Response
+from rest_framework.throttling import AnonRateThrottle
 from rest_framework.views import APIView
+
+
+class LoginRateThrottle(AnonRateThrottle):
+    scope = "login"
+
+
+class LeadRateThrottle(AnonRateThrottle):
+    scope = "leads"
 
 from .models import Client, Document, InsuranceProduct, Invoice, Lead, Policy, Renewal
 from .serializers import (
@@ -22,14 +31,30 @@ from .serializers import (
 )
 
 
+class DashboardAccessPermission(BasePermission):
+    message = "Acceso restringido al dashboard"
+
+    def has_permission(self, request, _view):
+        user = getattr(request, "user", None)
+        return bool(user and user.is_authenticated and user.is_staff)
+
+
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all().order_by("last_name", "first_name")
     serializer_class = ClientSerializer
+    permission_classes = (DashboardAccessPermission,)
+    filterset_fields = ["city", "state", "country"]
+    search_fields = ["first_name", "last_name", "email", "document_id", "phone_primary"]
+    ordering_fields = ["last_name", "first_name", "created_at"]
 
 
 class InsuranceProductViewSet(viewsets.ModelViewSet):
     queryset = InsuranceProduct.objects.filter(is_active=True).order_by("name")
     serializer_class = InsuranceProductSerializer
+    permission_classes = (DashboardAccessPermission,)
+    filterset_fields = ["category", "is_active"]
+    search_fields = ["name", "description"]
+    ordering_fields = ["name", "category"]
 
 
 class PolicyViewSet(viewsets.ModelViewSet):
@@ -41,21 +66,37 @@ class PolicyViewSet(viewsets.ModelViewSet):
     serializer_class = PolicySerializer
     lookup_field = "policy_number"
     lookup_value_regex = "[\w-]+"
+    permission_classes = (DashboardAccessPermission,)
+    filterset_fields = ["status", "product__category"]
+    search_fields = ["policy_number", "client__first_name", "client__last_name", "client__email"]
+    ordering_fields = ["start_date", "end_date", "renewal_date", "premium_amount"]
 
 
 class RenewalViewSet(viewsets.ModelViewSet):
     queryset = Renewal.objects.select_related("policy", "policy__client").all()
     serializer_class = RenewalSerializer
+    permission_classes = (DashboardAccessPermission,)
+    filterset_fields = ["status"]
+    search_fields = ["policy__policy_number", "policy__client__last_name"]
+    ordering_fields = ["renewal_date", "status"]
 
 
 class InvoiceViewSet(viewsets.ModelViewSet):
     queryset = Invoice.objects.select_related("policy", "policy__client").all()
     serializer_class = InvoiceSerializer
+    permission_classes = (DashboardAccessPermission,)
+    filterset_fields = ["status", "is_manual", "currency"]
+    search_fields = ["invoice_number", "policy__policy_number", "policy__client__last_name"]
+    ordering_fields = ["issue_date", "due_date", "amount", "status"]
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.select_related("client", "policy").all()
     serializer_class = DocumentSerializer
+    permission_classes = (DashboardAccessPermission,)
+    filterset_fields = ["document_type", "is_shared_with_client"]
+    search_fields = ["title", "client__last_name", "policy__policy_number"]
+    ordering_fields = ["created_at", "document_type"]
 
 
 class LeadViewSet(viewsets.ModelViewSet):
@@ -64,17 +105,10 @@ class LeadViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = (AllowAny,)
     authentication_classes: list = []
+    throttle_classes = (LeadRateThrottle,)
 
     def perform_create(self, serializer):
         serializer.save(source="web_form")
-
-
-class DashboardAccessPermission(BasePermission):
-    message = "Acceso restringido al dashboard"
-
-    def has_permission(self, request, view):
-        user = getattr(request, "user", None)
-        return bool(user and user.is_authenticated and user.is_staff)
 
 
 class DashboardMetricsView(APIView):
@@ -173,6 +207,7 @@ class DashboardMetricsView(APIView):
 class SessionLoginView(APIView):
     permission_classes = (AllowAny,)
     authentication_classes = ()
+    throttle_classes = (LoginRateThrottle,)
 
     def post(self, request):
         username = request.data.get("username")
