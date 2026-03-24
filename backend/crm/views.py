@@ -236,6 +236,7 @@ class SessionLoginView(APIView):
         )
 
 
+@method_decorator(csrf_exempt, name="dispatch")
 class SessionLogoutView(APIView):
     permission_classes = (DashboardAccessPermission,)
 
