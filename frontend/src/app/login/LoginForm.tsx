@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -96,6 +97,12 @@ export function LoginForm() {
       >
         {isSubmitting ? "Iniciando sesión..." : "Entrar"}
       </button>
+
+      <p className="text-center text-sm text-slate-500">
+        <Link href="/" className="text-emerald-600 hover:text-emerald-700 font-medium">
+          ← Volver al sitio
+        </Link>
+      </p>
     </form>
   );
 }
