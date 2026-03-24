@@ -238,7 +238,8 @@ class SessionLoginView(APIView):
 
 @method_decorator(csrf_exempt, name="dispatch")
 class SessionLogoutView(APIView):
-    permission_classes = (DashboardAccessPermission,)
+    permission_classes = (AllowAny,)
+    authentication_classes = ()
 
     def post(self, request):
         logout(request)
